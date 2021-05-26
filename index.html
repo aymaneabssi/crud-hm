@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!--
+          
+            You are building the new Amazon.
+            This time you are also responsible for the back office.
+            THIS is you CRUD endpoint
+            https://striveschool-api.herokuapp.com/api/product/
+            The product model is 
+            {
+                "_id": "5d318e1a8541744830bef139", //SERVER GENERATED
+                "name": "app test 1",  //REQUIRED
+                "description": "somthing longer", //REQUIRED
+                "brand": "nokia", //REQUIRED
+                "imageUrl": "https://drop.ndtv.com/TECH/product_database/images/2152017124957PM_635_nokia_3310.jpeg?downsize=*:420&output-quality=80", //REQUIRED
+                "price": 100, //REQUIRED
+                "userId": "admin", //SERVER GENERATED
+                "createdAt": "2019-07-19T09:32:10.535Z", //SERVER GENERATED
+                "updatedAt": "2019-07-19T09:32:10.535Z", //SERVER GENERATED
+                "__v": 0 //SERVER GENERATED
+            }
+            #---------------------------------------------------------------#
+            EVERY REST API CALL SHOULD BE AUTHENTICATED. 
+            Every request to the API should use Token Based Authentication to secure access to the contents.
+            You can get your token by registering on: strive.school/studentlogin
+            Authorization: Bearer ###########
+            Where ######### is the access_token returned by the endpoint.
+            #---------------------------------------------------------------#
+            Today you have to implement:
+            - A backoffice page, where you can insert the product by specifying the parameters
+            - A front page, where the user can see the available products
+            ------ N.B. ------
+            Tokens duration is set to 14 days. Whenever you'll need to obtain a new one you can send the following request:
+            
+            POST https://striveschool-api.herokuapp.com/api/account/login
+            {
+                "username": "testusername@yourmail.com",
+                "password":"pass"
+            }   
+        -->
+  </head>
+  <body>
+    <div>
+      <form autocomplete="off">
+        <div>
+          <label for="name">name:</label>
+          <input type="text" id="name" />
+        </div>
+        <div>
+          <label for="brand">Brand:</label>
+          <input type="text" id="brand" />
+        </div>
+        <div>
+          <div><label for="Discription">Discription</label></div>
+          <textarea
+            name="Discription"
+            id="Discription"
+            cols="30"
+            rows="10"
+            placeholder="Discription"
+          ></textarea>
+        </div>
+        <div>
+          <label for="Price">price:</label>
+          <input type="text" id="price" value="€" />
+        </div>
+        <div>
+          <input type="submit" value="Submit" id="btn" />
+        </div>
+      </form>
+    </div>
+    <div>
+      <table id="itemsList">
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>Brand</th>
+            <th>Discription</th>
+            <th>Price</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <script>
+      document
+        .getElementById('btn')
+        .addEventListener('click', function getData(e) {
+          e.preventDefault();
+          let formData = {};
+          formData['Name'] = document.getElementById('name').value;
+          formData['Brand'] = document.getElementById('brand').value;
+          formData['Discription'] =
+            document.getElementById('Discription').value;
+          formData['price'] = document.getElementById('price').value;
+          fetch(
+            'https://striveschool-api.herokuapp.com/api/product/',
+            { method: 'post' },
+            { body: json.stringfy(formData) },
+            {
+              headers: {
+                Authorization:
+                  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlMzE4MGNlYWY0ODAwMTVjOTE4NjEiLCJpYXQiOjE2MjIwMjg2NzIsImV4cCI6MTYyMzIzODI3Mn0.jvj0SIUNaGRXFNK8xf6IcY3ovTqNZ4QCmdS1Dyg_4M8',
+              },
+            }
+          );
+        });
+      window.onload = () => {
+        fetch('https://striveschool-api.herokuapp.com/api/product/', {
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlMzE4MGNlYWY0ODAwMTVjOTE4NjEiLCJpYXQiOjE2MjIwMjg2NzIsImV4cCI6MTYyMzIzODI3Mn0.jvj0SIUNaGRXFNK8xf6IcY3ovTqNZ4QCmdS1Dyg_4M8',
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data));
+      };
+    </script>
+  </body>
+</html>
